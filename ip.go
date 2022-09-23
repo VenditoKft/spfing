@@ -39,7 +39,7 @@ func NewIP(record string) (IP, error) {
 
 func (i IP) Match(ip net.IP) (m []string, errRtn error) {
 	if i.Network.Contains(ip) {
-		m = []string{i.Record}
+		m = append(m, i.Record)
 	}
 	return
 }
