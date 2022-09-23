@@ -36,6 +36,8 @@ func (i Include) Match(ip net.IP) ([]string, error) {
 	if err != nil {
 		return []string{}, err
 	}
-	m = append([]string{i.Record}, m...)
+	if len(m) > 0 {
+		m = append([]string{i.Record}, m...)
+	}
 	return m, nil
 }

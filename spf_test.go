@@ -154,6 +154,14 @@ func TestSPFMatches(t *testing.T) {
 			net.ParseIP("2a00:1450:4000::"),
 			[]string{"ip6:2a00:1450:4000::"},
 		},
+		{
+			txtDomainPair{mainDomain: []string{"v=spf1 a include:subdomain.test.com -all"},
+				"subdomain.test.com": []string{"v=spf1 ip4:10.5.5.1/24 -all"}},
+			mxDomainPair{},
+			aDomainPair{mainDomain: {net.ParseIP("192.168.1.1")}},
+			net.ParseIP("10.5.5.1"),
+			[]string{"include:subdomain.test.com", "ip4:10.5.5.1/24"},
+		},
 	}
 	for _, testCase := range TestTable {
 		spf, err := New(mainDomain, MockResolver{
